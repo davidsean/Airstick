@@ -7,8 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class bluetooth extends AppCompatActivity {
-    sensorStreamer ss;
-    TextView tv;
 
     //Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
     //startActivityForResult(turnOn,0);
@@ -17,22 +15,23 @@ public class bluetooth extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth);
-        ss = sensorStreamer.getInstance();
-        TextView bluetoothStatus_value=findViewById(R.id.sensorStatus_value);
+        sensorStreamer ss = sensorStreamer.getInstance();
+        TextView bluetoothStatus_value = findViewById(R.id.sensorStatus_value);
+        TextView tv;
         if (ss.get_bluetoothStatus()==0) {
-            bluetoothStatus_value.setText("Cannot get bluetooth adapter");
-            LinearLayout ll = (LinearLayout) findViewById((R.id.linearLayout));
+            bluetoothStatus_value.setText(R.string.bluetooth_status_fail);
+            LinearLayout ll = findViewById((R.id.linearLayout));
             tv = new TextView(this);
-            tv.setText("No Dsevices");
+            tv.setText(R.string.no_bt_device);
             ll.addView(tv);
         } else {
-            bluetoothStatus_value.setText("ONLINE");
-            LinearLayout ll = (LinearLayout) findViewById((R.id.linearLayout));
+            bluetoothStatus_value.setText(R.string.online);
+            LinearLayout ll = findViewById((R.id.linearLayout));
             for (BluetoothDevice bt : ss.get_pairedDevices()) {
                 tv = new TextView(this);
                 tv.setText(bt.getName());
                 ll.addView(tv);
             }
         }
-    };
+    }
 }

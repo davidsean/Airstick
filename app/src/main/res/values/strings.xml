@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Airstick</string>
+    <string name="online">ONLINE</string>
+    <string name="no_bt_device">No Devices</string>
+    <string name="bluetooth_status_fail">Cannot get bluetooth adapter</string>
+    <string name="vectorsensor_fail">Cannot get rotation vector sensor</string>
 </resources>

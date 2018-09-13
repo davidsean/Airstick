@@ -17,7 +17,6 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    sensorStreamer ss;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,20 +25,20 @@ public class MainActivity extends AppCompatActivity {
         final TextView sensorStatus_value = findViewById(R.id.sensorStatus_value);
 
 
-        ss = new sensorStreamer( (SensorManager) getSystemService(SENSOR_SERVICE));
+        sensorStreamer ss = new sensorStreamer((SensorManager) getSystemService(SENSOR_SERVICE));
         ss.setInstance(ss);
 
         ss.set_bluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
         if (ss.get_bluetoothStatus() == 1) {
-            bluetoothStatus_value.setText("online");
+            bluetoothStatus_value.setText(R.string.online);
             ss.set_pairedDevices(ss.get_bluetoothAdapter().getBondedDevices());
         }
 
         if (ss.get_sensorStatus()==1){
-            sensorStatus_value.setText("online");
+            sensorStatus_value.setText(R.string.online);
         }
 
-        Button toSensor = (Button) findViewById(R.id.sensor_button);
+        Button toSensor = findViewById(R.id.sensor_button);
         toSensor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button toBluetooth = (Button) findViewById(R.id.bluetooth_button);
+        Button toBluetooth = findViewById(R.id.bluetooth_button);
         toBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,16 +63,15 @@ public class MainActivity extends AppCompatActivity {
 class sensorStreamer {
 
     private static sensorStreamer m_sensorStreamer;
-    private Sensor rotationVectorSensor;
-    private SensorEventListener rotationVectorEventListener;
+    private final Sensor rotationVectorSensor;
     private float[] m_orientations;
     private BluetoothAdapter bluetoothAdapter;
     private Set <BluetoothDevice> pairedDevices;
 
-    public sensorStreamer(SensorManager sm){
+    sensorStreamer(SensorManager sm){
 
         rotationVectorSensor = sm.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-        rotationVectorEventListener= new SensorEventListener() {
+        SensorEventListener rotationVectorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 float[] rotationMatrix = new float[16];
@@ -87,8 +85,8 @@ class sensorStreamer {
                         remappedRotationMatrix);
                 m_orientations = new float[3];
                 SensorManager.getOrientation(remappedRotationMatrix, m_orientations);
-                for(int i = 0; i < 3; i++) {
-                    m_orientations[i] = (float)(Math.toDegrees(m_orientations[i]));
+                for (int i = 0; i < 3; i++) {
+                    m_orientations[i] = (float) (Math.toDegrees(m_orientations[i]));
                 }
             }
 

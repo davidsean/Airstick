@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static java.util.Locale.*;
 
 public class sensor extends AppCompatActivity {
-    sensorStreamer ss;
-    float [] orientations = new float[3];
+    private sensorStreamer ss;
+    private float [] orientations = new float[3];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +21,9 @@ public class sensor extends AppCompatActivity {
         TextView sensorStatus_value=findViewById(R.id.sensorStatus_value);
 
         if (ss.get_sensorStatus()==0) {
-            sensorStatus_value.setText("Cannot get rotation vector sensor");
+            sensorStatus_value.setText(R.string.vectorsensor_fail);
         } else {
-            sensorStatus_value.setText("ONLINE");
+            sensorStatus_value.setText(R.string.online);
         }
 
         final TextView x_value = findViewById(R.id.x_value);
