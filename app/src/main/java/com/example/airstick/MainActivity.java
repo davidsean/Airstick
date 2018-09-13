@@ -85,6 +85,8 @@ class sensorStreamer {
                         remappedRotationMatrix);
                 m_orientations = new float[3];
                 SensorManager.getOrientation(remappedRotationMatrix, m_orientations);
+                //SensorManager.getOrientation(rotationMatrix, m_orientations);
+
                 for (int i = 0; i < 3; i++) {
                     m_orientations[i] = (float) (Math.toDegrees(m_orientations[i]));
                 }
